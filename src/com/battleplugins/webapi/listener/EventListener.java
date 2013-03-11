@@ -1,8 +1,3 @@
-/**
- *
- * @author lDucks
- *
- */
 package com.battleplugins.webapi.listener;
 
 import org.bukkit.event.EventHandler;
