@@ -12,12 +12,10 @@ import com.battleplugins.webapi.object.WebUrl;
 public class Example {
 
 	public void setUpUrl() throws Exception {
-		StringBuilder data = new StringBuilder();
-		Encode.encodeDataPair(data, "key", "value");
-
 		URL url = new URL("http://battleplugins.com/example.php");
 
-		WebUrl apiurl = new WebUrl(url, data);
+		WebUrl apiurl = new WebUrl(url);
+		apiurl.add("key","value");
 		
 		apiurl.openUrl();
 	}
