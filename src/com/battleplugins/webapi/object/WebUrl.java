@@ -6,7 +6,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.TimerTask;
 
+import org.bukkit.Bukkit;
+
+import com.battleplugins.webapi.WebAPI;
 import com.battleplugins.webapi.controllers.timers.Scheduler;
+import com.battleplugins.webapi.event.UrlCloseEvent;
 import com.battleplugins.webapi.event.UrlOpenEvent;
 
 /**
@@ -55,6 +59,14 @@ public class WebUrl {
 					event.callEvent();
 
 					reader.close();
+					
+					Bukkit.getScheduler().scheduleSyncDelayedTask(WebAPI.plugin, new Runnable() {
+						public void run() {
+							UrlCloseEvent event = new UrlCloseEvent(url, data);
+							event.callEvent();
+						}
+					});
+					
 				}catch(Exception e) {
 					e.printStackTrace();
 				}

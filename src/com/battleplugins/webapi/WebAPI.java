@@ -15,8 +15,6 @@ public class WebAPI extends JavaPlugin {
 	
 	public void onEnable() {
 		plugin = this;
-		
-		this.getServer().getPluginManager().registerEvents(new EventListener(), this);
 	}
 	
 }
