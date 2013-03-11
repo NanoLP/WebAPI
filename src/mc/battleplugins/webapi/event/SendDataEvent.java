@@ -10,12 +10,12 @@ import mc.battleplugins.webapi.object.URLData;
  * @author lDucks
  */
 
-public class UrlOpenEvent extends WebEvent{
+public class SendDataEvent extends WebEvent{
 	final URL url;
 	final URLData data;
 	final long time;
 
-	public UrlOpenEvent(URL url, URLData data) {
+	public SendDataEvent(URL url, URLData data) {
 		this.url = url;
 		this.data = data;
 		this.time = System.currentTimeMillis();
