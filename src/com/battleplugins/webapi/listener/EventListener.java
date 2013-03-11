@@ -13,8 +13,9 @@ import com.battleplugins.webapi.event.UrlOpenEvent;
 
 /**
  * @author lDucks
+ *
+ * Listen to Specific web events
  */
-
 public class EventListener implements Listener {
 
 	@EventHandler
@@ -22,5 +23,5 @@ public class EventListener implements Listener {
 		UrlCloseEvent e = new UrlCloseEvent(event.getUrl(), event.getData());
 		e.callEvent();
 	}
-	
+
 }

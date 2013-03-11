@@ -5,6 +5,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Bukkit;
+
+import com.battleplugins.webapi.WebAPI;
+
+/**
+ *
+ * @author alkarin
+ *
+ */
 public class Scheduler {
 	static int count = 0; /// count of current async timers
 
@@ -40,4 +49,12 @@ public class Scheduler {
 		return tid;
 	}
 
+	public static int scheduleSynchrounousTask(Runnable task){
+		return scheduleSynchrounousTask(task,0);
+	}
+
+	public static int scheduleSynchrounousTask(Runnable task, long millis){
+		/// convert millis to ticks and schedule
+		return Bukkit.getScheduler().scheduleSyncDelayedTask(WebAPI.plugin, task, (int)millis / 50);
+	}
 }
