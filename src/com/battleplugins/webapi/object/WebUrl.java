@@ -7,7 +7,6 @@ import java.net.URLConnection;
 import java.util.TimerTask;
 
 import com.battleplugins.webapi.controllers.timers.Scheduler;
-import com.battleplugins.webapi.event.UrlCloseEvent;
 import com.battleplugins.webapi.event.UrlOpenEvent;
 
 /**
@@ -51,15 +50,11 @@ public class WebUrl {
 
 					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					reader.read();
-
-					UrlOpenEvent event = new UrlOpenEvent(url, data);
-					event.callEvent();
-
 					reader.close();
 
 					Scheduler.scheduleSynchrounousTask(new Runnable() {
 						public void run() {
-							UrlCloseEvent event = new UrlCloseEvent(url, data);
+							UrlOpenEvent event = new UrlOpenEvent(url, data);
 							event.callEvent();
 						}
 					});
@@ -80,11 +75,14 @@ public class WebUrl {
 
 					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					reader.read();
-
-					UrlOpenEvent event = new UrlOpenEvent(url, data);
-					event.callEvent();
-
 					reader.close();
+					
+					Scheduler.scheduleSynchrounousTask(new Runnable() {
+						public void run() {
+							UrlOpenEvent event = new UrlOpenEvent(url, data);
+							event.callEvent();
+						}
+					});
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
