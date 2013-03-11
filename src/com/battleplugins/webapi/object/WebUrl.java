@@ -55,7 +55,9 @@ public class WebUrl {
 					event.callEvent();
 
 					reader.close();
-				}catch(Exception e) {}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -74,7 +76,9 @@ public class WebUrl {
 					event.callEvent();
 
 					reader.close();
-				}catch(Exception e) {}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
