@@ -1,8 +1,9 @@
-package com.battleplugins.webapi.event;
+package mc.battleplugins.webapi.event;
 
 import java.net.URL;
 
-import com.battleplugins.webapi.object.URLData;
+import mc.battleplugins.webapi.object.URLData;
+
 
 
 /**

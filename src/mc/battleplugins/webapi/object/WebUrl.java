@@ -1,4 +1,4 @@
-package com.battleplugins.webapi.object;
+package mc.battleplugins.webapi.object;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,8 +6,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.battleplugins.webapi.controllers.timers.Scheduler;
-import com.battleplugins.webapi.event.UrlOpenEvent;
+import mc.battleplugins.webapi.controllers.timers.Scheduler;
+import mc.battleplugins.webapi.event.UrlOpenEvent;
+
 
 /**
  *
