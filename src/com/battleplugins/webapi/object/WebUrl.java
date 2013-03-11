@@ -42,11 +42,30 @@ public class WebUrl {
 		return data;
 	}
 	
-	public void runWithoutData() {
+	public void openWithoutData() {
 		Bukkit.getScheduler().runTaskAsynchronously(WebAPI.plugin, new Runnable() {
 			public void run() {
 				try {
 					URLConnection connection = url.openConnection();
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+					reader.read();
+					
+					UrlOpenEvent event = new UrlOpenEvent(url, data);
+					event.callEvent();
+					
+					reader.close();
+				}catch(Exception e) {}
+			}
+		});
+	}
+	
+	public void openWithData() {
+		Bukkit.getScheduler().runTaskAsynchronously(WebAPI.plugin, new Runnable() {
+			public void run() {
+				try {
+					URL dataurl = new URL(url.toString() + "?" + data.toString());
+					URLConnection connection = dataurl.openConnection();
 
 					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					reader.read();

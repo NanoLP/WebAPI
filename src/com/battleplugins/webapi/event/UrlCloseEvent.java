@@ -7,12 +7,12 @@ import java.net.URL;
  * @author lDucks
  */
 
-public class UrlOpenEvent extends WebEvent{
+public class UrlCloseEvent extends WebEvent{
 	final URL url;
 	final StringBuilder data;
 	final long time;
 
-	public UrlOpenEvent(URL url, StringBuilder data) {
+	public UrlCloseEvent(URL url, StringBuilder data) {
 		this.url = url;
 		this.data = data;
 		this.time = System.currentTimeMillis();
