@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.TimerTask;
 
 import com.battleplugins.webapi.controllers.timers.Scheduler;
 import com.battleplugins.webapi.event.UrlOpenEvent;
@@ -41,36 +40,16 @@ public class WebUrl {
 		return data;
 	}
 
-	public void openWithoutData() {
-		Scheduler.scheduleAsynchrounousTask(new TimerTask() {
-			@Override
-			public void run() {
-				try {
-					URLConnection connection = url.openConnection();
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					reader.read();
-					reader.close();
-
-					Scheduler.scheduleSynchrounousTask(new Runnable() {
-						public void run() {
-							UrlOpenEvent event = new UrlOpenEvent(url, data);
-							event.callEvent();
-						}
-					});
-
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public void openWithData() {
+	public void openUrl() {
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
 			public void run() {
 				try {
-					URL dataurl = new URL(url.toString() + "?" + data.toString());
+					String urlstring = url.toString();
+					
+					if(data != null)
+						urlstring = urlstring + "?" + data.toString();
+					
+					URL dataurl = new URL(urlstring);
 					URLConnection connection = dataurl.openConnection();
 
 					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
