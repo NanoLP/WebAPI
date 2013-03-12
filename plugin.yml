@@ -1,5 +1,5 @@
 name: WebAPI
-main: com.battleplugins.webapi.WebAPI
+main: mc.battleplugins.webapi.WebAPI
 version: 0.0.2
 description: A plugin tool for providing URL connections in an organized and proper manner.
 authors: [lDucks, alkarinv]
