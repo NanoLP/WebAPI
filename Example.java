@@ -15,7 +15,7 @@ public class Example {
 		URL url = new URL("http://battleplugins.com/example.php");
 
 		WebUrl apiurl = new WebUrl(url);
-		apiurl.add("key","value");
+		apiurl.addData("key","value");
 		
 		apiurl.openUrl();
 	}
