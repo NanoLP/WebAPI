@@ -7,7 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import mc.battleplugins.webapi.controllers.timers.Scheduler;
-import mc.battleplugins.webapi.event.UrlOpenEvent;
+import mc.battleplugins.webapi.event.SendDataEvent;
 
 
 /**
@@ -62,7 +62,9 @@ public class WebUrl {
 		return urlstring;
 	}
 
-	public void openUrl() {
+	public void sendData() {
+		final long calltime = System.currentTimeMillis();
+		
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
 			public void run() {
 				try {
@@ -75,7 +77,7 @@ public class WebUrl {
 
 					Scheduler.scheduleSynchrounousTask(new Runnable() {
 						public void run() {
-							UrlOpenEvent event = new UrlOpenEvent(url, data);
+							SendDataEvent event = new SendDataEvent(new WebUrl(url, data), calltime);
 							event.callEvent();
 						}
 					});

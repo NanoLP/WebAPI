@@ -17,7 +17,7 @@ public class Example {
 		WebUrl apiurl = new WebUrl(url);
 		apiurl.addData("key","value");
 		
-		apiurl.openUrl();
+		apiurl.sendData();
 	}
 
 }
