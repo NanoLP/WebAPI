@@ -5,10 +5,6 @@ import java.net.URL;
 import com.battleplugins.webapi.controllers.encoding.Encode;
 import com.battleplugins.webapi.object.WebUrl;
 
-/**
- * @author lDucks
- *
- */
 public class Example {
 
 	public void setUpUrl() throws Exception {
