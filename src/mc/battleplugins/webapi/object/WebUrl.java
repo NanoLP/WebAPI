@@ -16,7 +16,7 @@ import mc.battleplugins.webapi.event.SendDataEvent;
  *
  */
 
-public class WebUrl {
+public class WebURL {
 
 	final URL url;
 	URLData data;
@@ -25,7 +25,7 @@ public class WebUrl {
 	 * @param url Core URL for instance
 	 * @param data Data parsed to url (if not null)
 	 */
-	public WebUrl(URL url, URLData data) {
+	public WebURL(URL url, URLData data) {
 		this.url = url;
 		this.data = data;
 	}
@@ -34,7 +34,7 @@ public class WebUrl {
 	 * @param url Core URL for instance
 	 * @param data Data parsed to url (if not null)
 	 */
-	public WebUrl(URL url) {
+	public WebURL(URL url) {
 		this.url = url;
 		this.data = new URLData();
 	}
@@ -77,7 +77,7 @@ public class WebUrl {
 
 					Scheduler.scheduleSynchrounousTask(new Runnable() {
 						public void run() {
-							SendDataEvent event = new SendDataEvent(new WebUrl(url, data), calltime);
+							SendDataEvent event = new SendDataEvent(new WebURL(url, data), calltime);
 							event.callEvent();
 						}
 					});

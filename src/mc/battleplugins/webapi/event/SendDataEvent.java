@@ -1,6 +1,6 @@
 package mc.battleplugins.webapi.event;
 
-import mc.battleplugins.webapi.object.WebUrl;
+import mc.battleplugins.webapi.object.WebURL;
 
 
 
@@ -9,16 +9,16 @@ import mc.battleplugins.webapi.object.WebUrl;
  */
 
 public class SendDataEvent extends WebEvent{
-	final WebUrl url;
+	final WebURL url;
 	final long stop, start;
 
-	public SendDataEvent(WebUrl url, long start) {
+	public SendDataEvent(WebURL url, long start) {
 		this.url = url;
 		this.start = start;
 		this.stop = System.currentTimeMillis();
 	}
 
-	public WebUrl getUrl(){
+	public WebURL getURL(){
 		return url;
 	}
 
