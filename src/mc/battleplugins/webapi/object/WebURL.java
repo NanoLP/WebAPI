@@ -69,16 +69,16 @@ public class WebURL {
 	public void sendData() {
 		sender(null);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param caller The player (if any) that called the event
-	 * 
+	 *
 	 */
 	public void sendData(String caller) {
 		sender(caller);
 	}
-	
+
 	private void sender(final String caller) {
 		final long calltime = System.currentTimeMillis();
 
@@ -104,29 +104,31 @@ public class WebURL {
 			}
 		});
 	}
-	
+
 	public void getPage(final URLResponseHandler handler){
 		Scheduler.scheduleAsynchrounousTask(new Runnable(){
 			public void run() {
 				BufferedReader br = null;
 				try {
-					final URLConnection connection = url.openConnection();
+					URL dataurl = new URL(getURLString());
+
+					final URLConnection connection = dataurl.openConnection();
 					connection.setConnectTimeout(conTimeout);
 					connection.setReadTimeout(readTimeout);
 
 					br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					try {
-						handler.response(br);
+						handler.validResponse(br);
 					} catch (Exception e2){
 						System.err.println("Failed parsing response to url " + url);
 						e2.printStackTrace();
 					}
 				} catch (Exception e){
 					e.printStackTrace();
+					handler.invalidResponse(e);
 				} finally {
 					try { if (br != null) br.close(); } catch (Exception e){}
 				}
-
 			}
 		});
 	}
