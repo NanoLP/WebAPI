@@ -2,8 +2,6 @@ package mc.battleplugins.webapi.event;
 
 import mc.battleplugins.webapi.object.WebURL;
 
-import org.bukkit.entity.Player;
-
 
 
 /**
@@ -13,9 +11,9 @@ import org.bukkit.entity.Player;
 public class SendDataEvent extends WebEvent{
 	final WebURL url;
 	final long stop, start;
-	final Player caller;
+	final String caller;
 
-	public SendDataEvent(WebURL url, long start, Player caller) {
+	public SendDataEvent(WebURL url, long start, String caller) {
 		this.url = url;
 		this.start = start;
 		this.stop = System.currentTimeMillis();
@@ -38,7 +36,7 @@ public class SendDataEvent extends WebEvent{
 		return stop - start;
 	}
 	
-	public Player getCaller() {
+	public String getCaller() {
 		return caller;
 	}
 }

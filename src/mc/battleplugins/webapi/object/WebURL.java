@@ -10,8 +10,6 @@ import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
-import org.bukkit.entity.Player;
-
 
 /**
  *
@@ -77,11 +75,11 @@ public class WebURL {
 	 * @param caller The player (if any) that called the event
 	 * 
 	 */
-	public void sendData(Player caller) {
+	public void sendData(String caller) {
 		sender(caller);
 	}
 	
-	private void sender(final Player caller) {
+	private void sender(final String caller) {
 		final long calltime = System.currentTimeMillis();
 
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
