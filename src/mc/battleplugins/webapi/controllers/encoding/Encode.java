@@ -14,7 +14,7 @@ import java.net.URLEncoder;
  */
 public class Encode {
 	public static void encodeDataPair(final StringBuilder buffer, final String key, final String value) throws UnsupportedEncodingException {
-		if(buffer.length() == 0)
+		if(buffer.length() > 0)
 			buffer.append('&');
 		
 		buffer.append(encode(key)).append('=').append(encode(value));
