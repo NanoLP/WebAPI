@@ -8,6 +8,7 @@ import java.net.URLConnection;
 
 import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.event.SendDataEvent;
+import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
 
 /**
@@ -20,6 +21,9 @@ public class WebURL {
 
 	final URL url;
 	URLData data;
+
+	int readTimeout = 5000;
+	int conTimeout = 7000;
 
 	/**
 	 * @param url Core URL for instance
@@ -64,7 +68,7 @@ public class WebURL {
 
 	public void sendData() {
 		final long calltime = System.currentTimeMillis();
-		
+
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
 			public void run() {
 				try {
@@ -84,6 +88,33 @@ public class WebURL {
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
+			}
+		});
+	}
+
+	public void getPage(final URLResponseHandler handler){
+		Scheduler.scheduleAsynchrounousTask(new Runnable(){
+			@Override
+			public void run() {
+				BufferedReader br = null;
+				try {
+					final URLConnection connection = url.openConnection();
+					connection.setConnectTimeout(conTimeout);
+					connection.setReadTimeout(readTimeout);
+
+					br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+					try {
+						handler.response(br);
+					} catch (Exception e2){
+						System.err.println("Failed parsing response to url " + url);
+						e2.printStackTrace();
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+				} finally {
+					try { if (br != null) br.close(); } catch (Exception e){}
+				}
+
 			}
 		});
 	}
