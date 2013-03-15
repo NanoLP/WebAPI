@@ -1,16 +1,15 @@
-package com.battleplugins.webapi;
+package test.mc.battleplugins.webapi;
 
 import java.net.URL;
 
-import com.battleplugins.webapi.controllers.encoding.Encode;
-import com.battleplugins.webapi.object.WebUrl;
+import mc.battleplugins.webapi.object.WebURL;
 
 public class Example {
 
 	public void setUpUrl() throws Exception {
 		URL url = new URL("http://battleplugins.com/example.php");
 
-		WebUrl apiurl = new WebUrl(url);
+		WebURL apiurl = new WebURL(url);
 		apiurl.addData("key","value");
 		
 		apiurl.sendData();

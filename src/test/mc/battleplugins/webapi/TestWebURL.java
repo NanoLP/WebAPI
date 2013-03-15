@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import junit.framework.TestCase;
+
 import mc.battleplugins.webapi.object.WebURL;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
@@ -36,7 +37,6 @@ public class TestWebURL extends TestCase{
 		url.addData("key", "10b11bc41654f56f5801434d19b4b997");
 
 		url.getPage(new URLResponseHandler(){
-			@Override
 			public void validResponse(BufferedReader br) throws IOException {
 				System.out.println("######## in Response");
 				String line = null;
@@ -47,7 +47,6 @@ public class TestWebURL extends TestCase{
 				validResponse = true;
 			}
 
-			@Override
 			public void invalidResponse(Exception e) {
 				System.out.println("######## invalid Response");
 				quit = true;
