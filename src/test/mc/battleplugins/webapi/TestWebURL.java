@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import junit.framework.TestCase;
-
 import mc.battleplugins.webapi.object.WebURL;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
@@ -55,17 +54,15 @@ public class TestWebURL extends TestCase{
 		});
 		int count = 0;
 		while (!quit){
-			try {
-				Thread.sleep(1000);
-				if (count++ > 3)
-					quit = true;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			sleep(1000);
+			if (count++ > 3)
+				quit = true;
 		}
 		assertTrue(validResponse);
 	}
-
+	public void sleep(long millis){
+		try {Thread.sleep(millis);} catch (InterruptedException e) {e.printStackTrace();}
+	}
 	public void testValidConnection(String caller) {
 		WebURL url = null;
 		try {
@@ -77,7 +74,13 @@ public class TestWebURL extends TestCase{
 		url.addData("server", "209.236.121.173");
 		url.addData("connection", "10b11bc41654f56f5801434d19b4b997");
 		url.sendData(caller);
+	}
 
-//		assertTrue(valid);
+	public void testGetServerIP(){
+		String ip = GetServerIP.getServerIP();
+		assertNull(ip);
+		sleep(1000);
+		ip = GetServerIP.getServerIP();
+		assertNotNull(ip);
 	}
 }

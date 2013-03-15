@@ -9,20 +9,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
 
-import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.object.WebURL;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
-
-import org.bukkit.Bukkit;
 
 /**
  * @author lDucks
  *
  */
 public class GetServerIP {
-	
+
 	static String serverip = null;
-	
+
 	public static String getServerIP(){
 		if(serverip == null) {
 			URL whatismyip;
@@ -41,18 +38,7 @@ public class GetServerIP {
 
 					if(ip == null)
 						throw new NullPointerException();
-
-					Scheduler.scheduleSynchrounousTask(new Runnable() {
-						public void run() {
-							String newip = ip;
-							if(Bukkit.getPort() != 25565) {
-								newip = newip+":"+Bukkit.getPort();
-							}
-
-							serverip = newip;
-						}
-
-					});
+					serverip = ip;
 				}
 
 				public void invalidResponse(Exception e) {
