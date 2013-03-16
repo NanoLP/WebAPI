@@ -61,8 +61,7 @@ public class WebURL {
 
 	public String getURLString() throws UnsupportedEncodingException{
 		String urlstring = url.toString();
-		if(data != null)
-			urlstring = urlstring + "?" + data.getURLString();
+		urlstring = urlstring + "?" + data.getURLString();
 		return urlstring;
 	}
 

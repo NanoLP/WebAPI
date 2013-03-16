@@ -22,8 +22,14 @@ public class URLData {
 	public String getURLString() throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		for (Entry<String,String> entry : data.entrySet()){
-			Encode.encodeDataPair(sb, entry.getKey(), entry.getValue());
+			
+			if(entry.getKey() != null && entry.getValue() != null 
+					&& entry.getKey().length() > 0 && entry.getValue().length() > 0 )
+				Encode.encodeDataPair(sb, entry.getKey(), entry.getValue());
 		}
-		return sb.toString();
+
+		if(sb.length() > 0)
+			return sb.toString();
+		else return "";
 	}
 }
