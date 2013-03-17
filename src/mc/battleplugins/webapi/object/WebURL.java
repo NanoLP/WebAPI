@@ -85,11 +85,7 @@ public class WebURL {
 			public void run() {
 				try {
 					URL dataurl = new URL(getURLString());
-					URLConnection connection = dataurl.openConnection();
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					reader.read();
-					reader.close();
+					dataurl.openConnection();
 
 					Scheduler.scheduleSynchrounousTask(new Runnable() {
 						public void run() {
