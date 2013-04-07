@@ -50,7 +50,7 @@ public class GetServerIP extends TestCase {
 					public void invalidResponse(Exception e) {
 						e.printStackTrace();
 					}
-				});
+				}, "UTF-8");
 			}
 		}
 		return serverip;

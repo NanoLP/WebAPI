@@ -59,14 +59,14 @@ public class WebURL {
 		data.add(key,value);
 	}
 
-	public String getURLString() throws UnsupportedEncodingException{
+	public String getURLString(String encodingmethod) throws UnsupportedEncodingException{
 		String urlstring = url.toString();
-		urlstring = urlstring + "?" + data.getURLString();
+		urlstring = urlstring + "?" + data.getURLString(encodingmethod);
 		return urlstring;
 	}
 
-	public void sendData() {
-		sender(null);
+	public void sendData(String encodingmethod) {
+		sender(encodingmethod, null);
 	}
 
 	/**
@@ -74,17 +74,17 @@ public class WebURL {
 	 * @param caller The player (if any) that called the event
 	 *
 	 */
-	public void sendData(String caller) {
-		sender(caller);
+	public void sendData(String encodingmethod, String caller) {
+		sender(encodingmethod, caller);
 	}
 
-	private void sender(final String caller) {
+	private void sender(final String encodingmethod, final String caller) {
 		final long calltime = System.currentTimeMillis();
 
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
 			public void run() {
 				try {
-					URL dataurl = new URL(getURLString());
+					URL dataurl = new URL(getURLString(encodingmethod));
 					dataurl.openConnection();
 
 					Scheduler.scheduleSynchrounousTask(new Runnable() {
@@ -100,12 +100,12 @@ public class WebURL {
 		});
 	}
 
-	public void getPage(final URLResponseHandler handler){
+	public void getPage(final URLResponseHandler handler, final String encodingmethod){
 		Scheduler.scheduleAsynchrounousTask(new Runnable(){
 			public void run() {
 				BufferedReader br = null;
 				try {
-					URL dataurl = new URL(getURLString());
+					URL dataurl = new URL(getURLString(encodingmethod));
 
 					final URLConnection connection = dataurl.openConnection();
 					connection.setConnectTimeout(conTimeout);

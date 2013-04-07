@@ -80,6 +80,6 @@ public class SendDataListener extends TestCase implements Listener{
 					}
 				});
 			}
-		});
+		}, "UTF-8");
 	}
 }

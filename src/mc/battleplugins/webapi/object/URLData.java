@@ -19,13 +19,13 @@ public class URLData {
 		return data.remove(key);
 	}
 
-	public String getURLString() throws UnsupportedEncodingException {
+	public String getURLString(String encodingmethod) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		for (Entry<String,String> entry : data.entrySet()){
 			
 			if(entry.getKey() != null && entry.getValue() != null 
 					&& entry.getKey().length() > 0 && entry.getValue().length() > 0 )
-				Encode.encodeDataPair(sb, entry.getKey(), entry.getValue());
+				Encode.encodeDataPair(sb, entry.getKey(), entry.getValue(), encodingmethod);
 		}
 
 		if(sb.length() > 0)

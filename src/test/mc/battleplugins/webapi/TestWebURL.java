@@ -51,7 +51,7 @@ public class TestWebURL extends TestCase{
 				quit = true;
 				fail();
 			}
-		});
+		}, "UTF-8");
 		int count = 0;
 		while (!quit){
 			sleep(1000);
