@@ -81,6 +81,7 @@ public class TestWebURL extends TestCase{
 		assertNull(ip);
 		sleep(1000);
 		ip = GetServerIP.getServerIP();
+		System.out.println("Ip = " + ip);
 		assertNotNull(ip);
 	}
 }
