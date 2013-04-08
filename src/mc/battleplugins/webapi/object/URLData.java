@@ -21,6 +21,10 @@ public class URLData {
 		return data.remove(key);
 	}
 
+	public void setEncoding(Encoding encoding){
+		this.encoding = encoding;
+	}
+
 	public String getURLString() throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		for (Entry<String,String> entry : data.entrySet()){

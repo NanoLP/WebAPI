@@ -45,10 +45,12 @@ public class GetServerIP extends TestCase {
 						serverip += ":"+port;
 				}
 
+
 				public void invalidResponse(Exception e) {
 					e.printStackTrace();
 				}
 			});
+
 		}
 		return serverip;
 	}

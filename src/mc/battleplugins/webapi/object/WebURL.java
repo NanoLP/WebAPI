@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import mc.battleplugins.webapi.controllers.encoding.Hex_Encoding;
 import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
@@ -69,14 +70,18 @@ public class WebURL {
 		this.connectionType = type;
 	}
 
+	public void setEncoding(Hex_Encoding encoding) {
+		data.setEncoding(encoding);
+	}
+
 	public String getURLString() throws UnsupportedEncodingException, MalformedURLException{
 		String urlstring = url.toString();
 		urlstring = urlstring + "?" + data.getURLString();
 		return urlstring;
 	}
 
-	public void sendData() {
-		sender(null);
+	public void sendData(String encodingmethod) {
+		sender(encodingmethod, null);
 	}
 
 	/**
@@ -84,11 +89,11 @@ public class WebURL {
 	 * @param caller The player (if any) that called the event
 	 *
 	 */
-	public void sendData(String caller) {
-		sender(caller);
+	public void sendData(String encodingmethod, String caller) {
+		sender(encodingmethod, caller);
 	}
 
-	private void sender(final String caller) {
+	private void sender(final String encodingmethod, final String caller) {
 		final long calltime = System.currentTimeMillis();
 
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
@@ -110,13 +115,6 @@ public class WebURL {
 		});
 	}
 
-	private String getPostDataString() throws UnsupportedEncodingException {
-		return data.getURLString();
-	}
-
-	public enum ConnectionType{
-		GET,POST
-	}
 	public void getPage(final URLResponseHandler handler){
 		Scheduler.scheduleAsynchrounousTask(new Runnable(){
 			public void run() {
@@ -157,15 +155,15 @@ public class WebURL {
 		connection.setDoInput(true);
 		connection.setUseCaches(false);
 		connection.setAllowUserInteraction(false);
-		String data = getPostDataString();
+		String postdata = data.getURLString();
 		connection.setRequestProperty("Content-type", "text/xml; charset=" + "UTF-8");
-		connection.setRequestProperty("Content-length",String.valueOf(data.length()));
+		connection.setRequestProperty("Content-length",String.valueOf(postdata.length()));
 		/// Make sure we can timeout eventually
 		connection.setConnectTimeout(conTimeout);
 		connection.setReadTimeout(readTimeout);
 
 		DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-		out.writeBytes(data);
+		out.writeBytes(postdata);
 		out.flush();
 		out.close();
 		return connection;
@@ -179,4 +177,5 @@ public class WebURL {
 		connection.setReadTimeout(readTimeout);
 		return connection;
 	}
+
 }

@@ -6,8 +6,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import junit.framework.TestCase;
+import mc.battleplugins.webapi.controllers.encoding.Hex_Encoding;
+import mc.battleplugins.webapi.object.ConnectionType;
 import mc.battleplugins.webapi.object.WebURL;
-import mc.battleplugins.webapi.object.WebURL.ConnectionType;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
 public class TestWebURL extends TestCase{
@@ -36,6 +37,7 @@ public class TestWebURL extends TestCase{
 		url.addData("server", "209.236.121.173");
 		url.addData("key", "10b11bc41654f56f5801434d19b4b997");
 		url.setConnectionType(ConnectionType.POST);
+		url.setEncoding(new Hex_Encoding());
 		url.getPage(new URLResponseHandler(){
 			public void validResponse(BufferedReader br) throws IOException {
 				System.out.println("######## in Response");

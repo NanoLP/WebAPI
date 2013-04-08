@@ -1,12 +1,14 @@
 package mc.battleplugins.webapi.controllers.encoding;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
-public class UTF8_Encoding extends Encode{
+import org.apache.commons.codec.binary.Hex;
+
+public class Hex_Encoding extends Encode{
 
 	@Override
 	public String encode(String text) throws UnsupportedEncodingException {
-		return URLEncoder.encode(text, "UTF-8");
+		return Hex.encodeHex(text.getBytes()).toString();
 	}
+
 }
