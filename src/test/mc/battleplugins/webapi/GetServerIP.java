@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
 
+import org.bukkit.Bukkit;
+
 import junit.framework.TestCase;
 import mc.battleplugins.webapi.object.WebURL;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
@@ -17,14 +19,14 @@ public class GetServerIP extends TestCase {
 
 	public static String getServerIP(){
 		if(serverip == null) {
-			//			final int port = Bukkit.getPort();
-			//
-			//			if(Bukkit.getServer().getIp() == null){
-			//				serverip = Bukkit.getServer().getIp();
-			//				if (port != 25565)
-			//					serverip += ":"+port;
-			//			} else {
-			final int port = 25565;
+			final int port = Bukkit.getPort();
+
+			if(Bukkit.getServer().getIp() == null){
+				serverip = Bukkit.getServer().getIp();
+				if (port != 25565)
+					serverip += ":"+port;
+			}
+			
 			URL whatismyip;
 			try {
 				whatismyip = new URL("http://BattlePunishments.net/grabbers/ip.php");
@@ -41,8 +43,6 @@ public class GetServerIP extends TestCase {
 					if(ip == null)
 						throw new NullPointerException();
 					serverip = ip;
-					if (port != 25565)
-						serverip += ":"+port;
 				}
 
 
