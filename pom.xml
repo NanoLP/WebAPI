@@ -26,11 +26,25 @@
             <version>1.4.7-R1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.7</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- unknown plugins that I had to add to the repo -->
         <!-- test dependencies -->
     </dependencies>
     <!-- How we will compile the plugin -->
     <build>
+        <!-- for deploying to battleplugins website we need wagon -->
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.4</version>
+            </extension>
+        </extensions>
         <defaultGoal>install</defaultGoal>
         <!-- Where our source directory is -->
         <sourceDirectory>${basedir}/src/mc</sourceDirectory>
@@ -66,6 +80,11 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>commons-codec:commons-codec</include>
+                                </includes>
+                            </artifactSet>
                             <!-- Specify to remove all unneeded classes -->
                             <minimizeJar>true</minimizeJar>
                         </configuration>
@@ -74,4 +93,11 @@
             </plugin>
         </plugins>
     </build>
+    <!-- for deployment to battleplugins maven repo -->
+    <distributionManagement>
+        <repository>
+            <id>battleplugins-repo</id>
+            <url>ftp://ftp.battleplugins.com/public_html/battleplugins/maven/</url>
+        </repository>
+    </distributionManagement>
 </project>
