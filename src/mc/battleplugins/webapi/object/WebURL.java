@@ -80,7 +80,7 @@ public class WebURL {
 		return urlstring;
 	}
 
-	public void sendData(String encodingmethod) {
+	public void sendData() {
 		sender(null);
 	}
 
@@ -89,7 +89,7 @@ public class WebURL {
 	 * @param caller The player (if any) that called the event
 	 *
 	 */
-	public void sendData(String encodingmethod, String caller) {
+	public void sendData(String caller) {
 		sender(caller);
 	}
 
