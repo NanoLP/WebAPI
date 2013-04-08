@@ -81,7 +81,7 @@ public class WebURL {
 	}
 
 	public void sendData(String encodingmethod) {
-		sender(encodingmethod, null);
+		sender(null);
 	}
 
 	/**
@@ -90,10 +90,10 @@ public class WebURL {
 	 *
 	 */
 	public void sendData(String encodingmethod, String caller) {
-		sender(encodingmethod, caller);
+		sender(caller);
 	}
 
-	private void sender(final String encodingmethod, final String caller) {
+	private void sender(final String caller) {
 		final long calltime = System.currentTimeMillis();
 
 		Scheduler.scheduleAsynchrounousTask(new Runnable() {
