@@ -3,6 +3,7 @@ package test.mc.battleplugins.webapi;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import junit.framework.TestCase;
 import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
@@ -17,7 +18,7 @@ import org.bukkit.event.Listener;
  * @author lDucks
  *
  */
-public class SendDataListener implements Listener{
+public class SendDataListener extends TestCase implements Listener{
 
 	public static int timerid = -2;
 
@@ -46,13 +47,16 @@ public class SendDataListener implements Listener{
 							Bukkit.getScheduler().cancelTask(timerid);
 							timerid = -2;
 
+							if(event.getCaller() == null)
+								return;
+
 							Player p = Bukkit.getPlayer(event.getCaller());
 							if(p != null) {
 								if(valid) {
 									p.sendMessage(ChatColor.GREEN + "Connection verified");
 
 									long time = event.getDuration();
-									p.sendMessage(ChatColor.GREEN + "System took "+ ChatColor.YELLOW + time 
+									p.sendMessage(ChatColor.GREEN + "System took "+ ChatColor.YELLOW + time
 											+ ChatColor.GREEN + " millisecond(s) to connect.");
 
 								}else

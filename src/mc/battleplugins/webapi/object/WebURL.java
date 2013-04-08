@@ -1,8 +1,12 @@
 package mc.battleplugins.webapi.object;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -24,6 +28,8 @@ public class WebURL {
 
 	int readTimeout = 5000;
 	int conTimeout = 7000;
+
+	ConnectionType connectionType = ConnectionType.GET;
 
 	/**
 	 * @param url Core URL for instance
@@ -59,10 +65,13 @@ public class WebURL {
 		data.add(key,value);
 	}
 
-	public String getURLString() throws UnsupportedEncodingException{
+	public void setConnectionType(ConnectionType type){
+		this.connectionType = type;
+	}
+
+	public String getURLString() throws UnsupportedEncodingException, MalformedURLException{
 		String urlstring = url.toString();
-		if(data != null)
-			urlstring = urlstring + "?" + data.getURLString();
+		urlstring = urlstring + "?" + data.getURLString();
 		return urlstring;
 	}
 
@@ -86,11 +95,7 @@ public class WebURL {
 			public void run() {
 				try {
 					URL dataurl = new URL(getURLString());
-					URLConnection connection = dataurl.openConnection();
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					reader.read();
-					reader.close();
+					dataurl.openConnection();
 
 					Scheduler.scheduleSynchrounousTask(new Runnable() {
 						public void run() {
@@ -105,16 +110,25 @@ public class WebURL {
 		});
 	}
 
+	private String getPostDataString() throws UnsupportedEncodingException {
+		return data.getURLString();
+	}
+
+	public enum ConnectionType{
+		GET,POST
+	}
 	public void getPage(final URLResponseHandler handler){
 		Scheduler.scheduleAsynchrounousTask(new Runnable(){
 			public void run() {
 				BufferedReader br = null;
 				try {
-					URL dataurl = new URL(getURLString());
-
-					final URLConnection connection = dataurl.openConnection();
-					connection.setConnectTimeout(conTimeout);
-					connection.setReadTimeout(readTimeout);
+					URLConnection connection = null;
+					switch(connectionType){
+					case GET:
+						connection = getGETConnection();
+					case POST:
+						connection = getPOSTConnection();
+					}
 
 					br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					try {
@@ -131,5 +145,38 @@ public class WebURL {
 				}
 			}
 		});
+	}
+
+	private HttpURLConnection getPOSTConnection() throws IOException {
+		URL dataurl = url;
+
+		final HttpURLConnection connection = (HttpURLConnection) dataurl.openConnection();
+		/// Set the POST settings
+		connection.setRequestMethod("POST");
+		connection.setDoOutput(true);
+		connection.setDoInput(true);
+		connection.setUseCaches(false);
+		connection.setAllowUserInteraction(false);
+		String data = getPostDataString();
+		connection.setRequestProperty("Content-type", "text/xml; charset=" + "UTF-8");
+		connection.setRequestProperty("Content-length",String.valueOf(data.length()));
+		/// Make sure we can timeout eventually
+		connection.setConnectTimeout(conTimeout);
+		connection.setReadTimeout(readTimeout);
+
+		DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+		out.writeBytes(data);
+		out.flush();
+		out.close();
+		return connection;
+	}
+
+	private URLConnection getGETConnection() throws IOException {
+		URL dataurl = new URL(getURLString());
+		final URLConnection connection = dataurl.openConnection();
+		/// Make sure we can timeout eventually
+		connection.setConnectTimeout(conTimeout);
+		connection.setReadTimeout(readTimeout);
+		return connection;
 	}
 }

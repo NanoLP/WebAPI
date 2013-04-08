@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mc.battleplugins.webapi.controllers.encoding.Encode;
+import mc.battleplugins.webapi.controllers.encoding.Encoding;
+import mc.battleplugins.webapi.controllers.encoding.UTF8_Encoding;
 
 
 public class URLData {
 	Map<String,String> data = new HashMap<String,String>();
+	Encoding encoding = new UTF8_Encoding();
 
 	public void add(String key, String value) {
 		data.put(key,value);
@@ -22,8 +24,13 @@ public class URLData {
 	public String getURLString() throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		for (Entry<String,String> entry : data.entrySet()){
-			Encode.encodeDataPair(sb, entry.getKey(), entry.getValue());
+			if(entry.getKey() != null && entry.getValue() != null
+					&& entry.getKey().length() > 0 && entry.getValue().length() > 0 )
+				encoding.encodeDataPair(sb, entry.getKey(), entry.getValue());
 		}
-		return sb.toString();
+
+		if(sb.length() > 0)
+			return sb.toString();
+		else return "";
 	}
 }

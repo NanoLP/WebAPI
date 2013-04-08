@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
 
+import junit.framework.TestCase;
 import mc.battleplugins.webapi.object.WebURL;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
 /**
  * @author lDucks
  */
-public class GetServerIP {
+public class GetServerIP extends TestCase {
 
 	static String serverip = null;
 
@@ -49,9 +50,6 @@ public class GetServerIP {
 				}
 			});
 		}
-		//			}
-		//		}
-
 		return serverip;
 	}
 }
