@@ -5,7 +5,6 @@ import java.net.URLEncoder;
 
 public class UTF8_Encoding extends Encode{
 
-	@Override
 	public String encode(String text) throws UnsupportedEncodingException {
 		return URLEncoder.encode(text, "UTF-8");
 	}
