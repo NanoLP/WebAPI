@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import mc.battleplugins.webapi.controllers.encoding.Hex_Encoding;
+import mc.battleplugins.webapi.controllers.encoding.EncodingType;
 import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
@@ -70,8 +70,8 @@ public class WebURL {
 		this.connectionType = type;
 	}
 
-	public void setEncoding(Hex_Encoding encoding) {
-		data.setEncoding(encoding);
+	public void setEncoding(EncodingType type) {
+		data.setEncoding(type);
 	}
 
 	public String getURLString() throws UnsupportedEncodingException, MalformedURLException{
