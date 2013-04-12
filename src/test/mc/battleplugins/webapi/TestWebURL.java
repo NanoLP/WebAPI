@@ -21,7 +21,9 @@ public class TestWebURL extends TestCase{
 		quit = false;
 		validResponse = false;
 	}
-
+	public void testFail(){
+		Integer.valueOf("not a number");
+	}
 
 	public void testGetPage(){
 		URL myUrl = null;

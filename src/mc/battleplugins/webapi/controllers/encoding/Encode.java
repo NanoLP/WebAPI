@@ -17,6 +17,6 @@ public abstract class Encode implements Encoding{
 			throws UnsupportedEncodingException {
 		if(buffer.length() > 0)
 			buffer.append('&');
-		buffer.append(encode(key)).append('=').append(encode(value));
+		buffer.append(key).append('=').append(encode(value));
 	}
 }

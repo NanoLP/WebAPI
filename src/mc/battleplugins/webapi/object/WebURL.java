@@ -9,9 +9,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
+import mc.battleplugins.webapi.controllers.MCApi;
 import mc.battleplugins.webapi.controllers.encoding.EncodingType;
-import mc.battleplugins.webapi.controllers.timers.Scheduler;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
@@ -25,7 +27,7 @@ import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 public class WebURL {
 
 	final URL url;
-	URLData data;
+	List<URLData> data = new ArrayList<URLData>();
 
 	int readTimeout = 5000;
 	int conTimeout = 7000;
@@ -36,18 +38,18 @@ public class WebURL {
 	 * @param url Core URL for instance
 	 * @param data Data parsed to url (if not null)
 	 */
-	public WebURL(URL url, URLData data) {
+	public WebURL(URL url) {
 		this.url = url;
-		this.data = data;
+		this.data = new ArrayList<URLData>();
 	}
 
 	/**
 	 * @param url Core URL for instance
-	 * @param data Data parsed to url (if not null)
+	 * @param data2 Data parsed to url (if not null)
 	 */
-	public WebURL(URL url) {
+	public WebURL(URL url, List<URLData> data) {
 		this.url = url;
-		this.data = new URLData();
+		this.data = data;
 	}
 
 	public URL getUrl() {
@@ -55,15 +57,20 @@ public class WebURL {
 	}
 
 	public void setData(URLData data) {
-		this.data = data;
+		this.data.clear();
+		this.data.add(data);
 	}
 
-	public URLData getData() {
+	public List<URLData> getData() {
 		return data;
 	}
 
 	public void addData(String key, String value){
-		data.add(key,value);
+		data.add(new URLData(key,value));
+	}
+
+	public void addData(URLData urlData) {
+		this.data.add(urlData);
 	}
 
 	public void setConnectionType(ConnectionType type){
@@ -71,13 +78,23 @@ public class WebURL {
 	}
 
 	public void setEncoding(EncodingType type) {
-		data.setEncoding(type);
+		for (URLData d : data){
+			d.setEncoding(type);}
 	}
 
 	public String getURLString() throws UnsupportedEncodingException, MalformedURLException{
-		String urlstring = url.toString();
-		urlstring = urlstring + "?" + data.getURLString();
-		return urlstring;
+		return (url.toString() +"?"+getDataString());
+	}
+
+	public String getDataString() throws UnsupportedEncodingException, MalformedURLException{
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for (URLData d : data){
+			if (!first) sb.append("&");
+			sb.append(d.getURLString());
+			first = false;
+		}
+		return sb.toString();
 	}
 
 	public void sendData() {
@@ -96,13 +113,13 @@ public class WebURL {
 	private void sender(final String caller) {
 		final long calltime = System.currentTimeMillis();
 
-		Scheduler.scheduleAsynchrounousTask(new Runnable() {
+		MCApi.getScheduler().scheduleAsynchrounousTask(new Runnable() {
 			public void run() {
 				try {
 					URL dataurl = new URL(getURLString());
 					dataurl.openConnection();
 
-					Scheduler.scheduleSynchrounousTask(new Runnable() {
+					MCApi.getScheduler().scheduleSynchrounousTask(new Runnable() {
 						public void run() {
 							SendDataEvent event = new SendDataEvent(new WebURL(url, data), calltime, caller);
 							event.callEvent();
@@ -116,7 +133,7 @@ public class WebURL {
 	}
 
 	public void getPage(final URLResponseHandler handler){
-		Scheduler.scheduleAsynchrounousTask(new Runnable(){
+		MCApi.getScheduler().scheduleAsynchrounousTask(new Runnable(){
 			public void run() {
 				BufferedReader br = null;
 				try {
@@ -155,7 +172,7 @@ public class WebURL {
 		connection.setDoInput(true);
 		connection.setUseCaches(false);
 		connection.setAllowUserInteraction(false);
-		String postdata = data.getURLString();
+		String postdata = this.getDataString();
 		connection.setRequestProperty("Content-type", "text/xml; charset=" + "UTF-8");
 		connection.setRequestProperty("Content-length",String.valueOf(postdata.length()));
 		/// Make sure we can timeout eventually
@@ -176,6 +193,11 @@ public class WebURL {
 		connection.setConnectTimeout(conTimeout);
 		connection.setReadTimeout(readTimeout);
 		return connection;
+	}
+
+	@Override
+	public String toString(){
+		return "[WebURL url="+url+" data="+data+"]";
 	}
 
 }

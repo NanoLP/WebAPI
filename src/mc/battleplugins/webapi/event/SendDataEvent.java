@@ -27,16 +27,20 @@ public class SendDataEvent extends WebEvent{
 	public long getStartTime() {
 		return start;
 	}
-	
+
 	public long getStopTime() {
 		return stop;
 	}
-	
+
 	public long getDuration() {
 		return stop - start;
 	}
-	
+
 	public String getCaller() {
 		return caller;
+	}
+	@Override
+	public String toString(){
+		return "[SendDataEvent url=" + url +",caller="+caller+",stop="+stop+",start="+start+"]";
 	}
 }

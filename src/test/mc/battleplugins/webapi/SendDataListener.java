@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import junit.framework.TestCase;
-import mc.battleplugins.webapi.controllers.timers.Scheduler;
+import mc.battleplugins.webapi.controllers.MCApi;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
 
@@ -34,7 +34,7 @@ public class SendDataListener extends TestCase implements Listener{
 					return;
 				}
 
-				Scheduler.scheduleSynchrounousTask(new Runnable() {
+				MCApi.getScheduler().scheduleSynchrounousTask(new Runnable() {
 					public void run() {
 						boolean valid = false;
 
@@ -68,7 +68,7 @@ public class SendDataListener extends TestCase implements Listener{
 			}
 
 			public void invalidResponse(Exception e) {
-				Scheduler.scheduleSynchrounousTask(new Runnable() {
+				MCApi.getScheduler().scheduleSynchrounousTask(new Runnable() {
 					public void run() {
 						if(timerid != -2) {
 							Bukkit.getScheduler().cancelTask(timerid);

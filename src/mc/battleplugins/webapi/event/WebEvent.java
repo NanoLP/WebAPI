@@ -1,6 +1,7 @@
 package mc.battleplugins.webapi.event;
 
-import org.bukkit.Bukkit;
+import mc.battleplugins.webapi.controllers.MCApi;
+
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -12,7 +13,7 @@ public class WebEvent extends Event{
 	private static final HandlerList handlers = new HandlerList();
 
 	public void callEvent(){
-		Bukkit.getServer().getPluginManager().callEvent(this);
+		MCApi.getServer().callEvent(this);
 	}
 
 	@Override

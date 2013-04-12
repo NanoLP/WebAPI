@@ -15,6 +15,16 @@ public class URLData {
 	Map<String,String> data = new HashMap<String,String>();
 	Encoding encoding = new UTF8_Encoding();
 
+	public URLData() {}
+	public URLData(String key, String value) {
+		add(key, value);
+	}
+
+	public URLData(String key, String value, EncodingType type) {
+		setEncoding(type);
+		add(key, value);
+	}
+
 	public void add(String key, String value) {
 		data.put(key,value);
 	}
@@ -38,5 +48,14 @@ public class URLData {
 		if(sb.length() > 0)
 			return sb.toString();
 		else return "";
+	}
+
+	@Override
+	public String toString(){
+		try {
+			return getURLString();
+		} catch (UnsupportedEncodingException e) {
+			return super.toString();
+		}
 	}
 }

@@ -36,11 +36,11 @@ public class Scheduler {
 		}
 	}
 
-	public static int scheduleAsynchrounousTask(Runnable task) {
+	public int scheduleAsynchrounousTask(Runnable task) {
 		return scheduleAsynchrounousTask(task, 0);
 	}
 
-	public static int scheduleAsynchrounousTask(Runnable task, long millis) {
+	public int scheduleAsynchrounousTask(Runnable task, long millis) {
 		int tid = count++;
 		synchronized(timers){
 			Timer t = new Timer();
@@ -50,11 +50,11 @@ public class Scheduler {
 		return tid;
 	}
 
-	public static int scheduleSynchrounousTask(Runnable task){
+	public int scheduleSynchrounousTask(Runnable task){
 		return scheduleSynchrounousTask(task,0);
 	}
 
-	public static int scheduleSynchrounousTask(Runnable task, long millis){
+	public int scheduleSynchrounousTask(Runnable task, long millis){
 		/// convert millis to ticks and schedule
 		return Bukkit.getScheduler().scheduleSyncDelayedTask(WebAPI.plugin, task, (int)millis / 50);
 	}
