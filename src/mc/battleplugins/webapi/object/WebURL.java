@@ -33,6 +33,7 @@ public class WebURL {
 	int conTimeout = 7000;
 
 	ConnectionType connectionType = ConnectionType.GET;
+	EncodingType defaultEncoding = EncodingType.UTF8;
 
 	/**
 	 * @param url Core URL for instance
@@ -66,7 +67,11 @@ public class WebURL {
 	}
 
 	public void addData(String key, String value){
-		data.add(new URLData(key,value));
+		addData(key,value,defaultEncoding);
+	}
+
+	public void addData(String key, String value, EncodingType type){
+		addData(new URLData(key,value,type));
 	}
 
 	public void addData(URLData urlData) {
@@ -78,8 +83,7 @@ public class WebURL {
 	}
 
 	public void setEncoding(EncodingType type) {
-		for (URLData d : data){
-			d.setEncoding(type);}
+		defaultEncoding = type;
 	}
 
 	public String getURLString() throws UnsupportedEncodingException, MalformedURLException{
