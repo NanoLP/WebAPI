@@ -197,7 +197,11 @@ public class WebURL {
 
 	@Override
 	public String toString(){
-		return "[WebURL url="+url+" data="+data+"]";
+		try{
+			return "[WebURL url="+url+"?"+getDataString()+"]";
+		} catch (Exception e){
+			return "[WebURL url="+url+" data="+data+"]";
+		}
 	}
 
 }
