@@ -32,6 +32,11 @@
             <version>1.7</version>
             <scope>compile</scope>
         </dependency>
+          <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+           <groupId>org.jsoup</groupId>
+           <artifactId>jsoup</artifactId>
+           <version>1.7.2</version>
+        </dependency>
         <!-- unknown plugins that I had to add to the repo -->
         <!-- test dependencies -->
     </dependencies>
