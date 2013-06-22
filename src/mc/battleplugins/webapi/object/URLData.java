@@ -12,8 +12,8 @@ import mc.battleplugins.webapi.controllers.encoding.UTF8_Encoding;
 
 
 public class URLData {
-	Map<String,String> data = new HashMap<String,String>();
-	Encoding encoding = new UTF8_Encoding();
+	private Map<String,String> data = new HashMap<String,String>();
+	private Encoding encoding = new UTF8_Encoding();
 
 	public URLData() {}
 	public URLData(String key, String value) {
@@ -32,7 +32,7 @@ public class URLData {
 	public String remove(String key){
 		return data.remove(key);
 	}
-
+	
 	public void setEncoding(EncodingType type){
 		this.encoding = EncodingFactory.createEncoding(type);
 	}
@@ -50,7 +50,6 @@ public class URLData {
 		else return "";
 	}
 
-	@Override
 	public String toString(){
 		try {
 			return getURLString();

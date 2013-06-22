@@ -16,6 +16,7 @@ import mc.battleplugins.webapi.controllers.MCApi;
 import mc.battleplugins.webapi.controllers.encoding.EncodingType;
 import mc.battleplugins.webapi.event.SendDataEvent;
 import mc.battleplugins.webapi.object.callbacks.URLResponseHandler;
+import mc.battleplugins.webapi.object.exceptions.URLParseException;
 
 
 /**
@@ -100,20 +101,18 @@ public class WebURL {
 		}
 		return sb.toString();
 	}
-
+	
+	@Deprecated
 	public void sendData() {
 		sender(null);
 	}
 
-	/**
-	 *
-	 * @param caller The player (if any) that called the event
-	 *
-	 */
+	@Deprecated
 	public void sendData(String caller) {
 		sender(caller);
 	}
 
+	@Deprecated
 	private void sender(final String caller) {
 		final long calltime = System.currentTimeMillis();
 
@@ -153,8 +152,7 @@ public class WebURL {
 					try {
 						handler.validResponse(br);
 					} catch (Exception e2){
-						System.err.println("Failed parsing response to url " + url);
-						e2.printStackTrace();
+						throw new URLParseException("Failed parsing response to url " + url);
 					}
 				} catch (Exception e){
 					e.printStackTrace();
