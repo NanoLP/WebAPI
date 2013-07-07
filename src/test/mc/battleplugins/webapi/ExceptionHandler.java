@@ -10,7 +10,6 @@ public enum ExceptionHandler implements Thread.UncaughtExceptionHandler{
 	INSTANCE;
 
 	private ExceptionHandler(){
-
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}
 

@@ -102,17 +102,14 @@ public class WebURL {
 		return sb.toString();
 	}
 	
-	@Deprecated
 	public void sendData() {
 		sender(null);
 	}
 
-	@Deprecated
 	public void sendData(String caller) {
 		sender(caller);
 	}
 
-	@Deprecated
 	private void sender(final String caller) {
 		final long calltime = System.currentTimeMillis();
 

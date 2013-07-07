@@ -11,7 +11,6 @@ public class Example extends TestCase {
 		URL url = new URL("http://battleplugins.com/example.php");
 		WebURL apiurl = new WebURL(url);
 		apiurl.addData("key","value");
-		apiurl.sendData("UTF-8");
 	}
 
 }
